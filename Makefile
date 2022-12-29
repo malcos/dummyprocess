@@ -3,7 +3,7 @@ export GO111MODULE=on
 COVERAGE_FILE=coverage.out
 
 EXECUTABLE=dummy
-NATIVE=$(EXECUTABLE)
+NATIVE=$(EXECUTABLE)$(if $(filter windows,$(shell go env GOOS)),.exe)
 LINUX=$(EXECUTABLE)_linux_amd64
 DARWIN=$(EXECUTABLE)_darwin_amd64
 WINDOWS=$(EXECUTABLE)_windows_amd64.exe
