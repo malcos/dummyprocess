@@ -15,6 +15,16 @@ You need the following software installed in order to compile this project
 - GNU `make` or compatible
 
 
+## Testing
+
+Sorry, No unit test present at the moment. But the make commands for running them are in place :)
+
+```shell
+make test          # run all tests
+make coverage      # like "test" but additionally show code coverage
+make viewcoverage  # like "coverage" but opens a report in your default browser
+```
+
 ## Building
 
 
