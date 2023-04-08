@@ -19,7 +19,8 @@ func main() {
 	durationArgDef := addArgument("duration", "0ms", "time to wait before terminating the process, supported suffixes are ms,s,m,h,d")
 	exitCodeArgDef := addArgument("exit_code", "0", "the code to return when the process ends sleeping")
 	signalCodeArgDef := addArgument("signal_code", "65", "the code to return when a signal is captured by the process")
-	printTextArgDef := addArgument("text_to_print", "", "test to print to STDOUT")
+	onStartTextArgDef := addArgument("on_start_text", "", "text to print to STDOUT on start")
+	onEndTextArgDef := addArgument("on_end_text", "", "text to print to STDOUT on normal termination")
 
 	// help requested? correct number of arguments provided?
 	basicOsArgsCheck()
@@ -28,16 +29,18 @@ func main() {
 	sleepDuration := getDurationOrExit(durationArgDef)
 	exitCode := getIntegerOrExit(exitCodeArgDef)
 	signalCode := getIntegerOrExit(signalCodeArgDef)
-	printText := getOsArg(printTextArgDef)
+	onStartText := getOsArg(onStartTextArgDef)
+	onEndText := getOsArg(onEndTextArgDef)
 
 	// print text (no line feed appended)
-	fmt.Print(strings.Replace(printText, "\\n", "\n", -1))
+	fmt.Print(strings.Replace(onStartText, "\\n", "\n", -1))
 
 	// dispatch the OS signal listener which will terminate the process on any signal
 	go osSignalListener(signalCode)
 
 	// happy path: wait and exit
 	time.Sleep(sleepDuration)
+	fmt.Print(strings.Replace(onEndText, "\\n", "\n", -1))
 	os.Exit(exitCode)
 
 }
